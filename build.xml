@@ -1,0 +1,39 @@
+<project name="BuildGreenfootProject" default="zip" basedir=".">
+    <description>
+        Generates a simple Greenfoot project based on the projects resources.
+    </description>
+    <!-- IMPORTANT:
+    0) Change projectName and add Ant build.xml (View => Tool Windows => Ant => +)
+    ****required only once on project setup***
+
+    1) Build  in IntelliJ (Build => Rebuild project)
+    2) run Ant build.xml (View => Tool Windows => Ant => Play)
+    -->
+    <property name="projectName" value="2_OOP_1-3"/>
+
+
+
+    <property name="src" location="src"/>
+    <property name="build" location="out/production/${projectName}"/>
+    <property name="images" location="images"/>
+    <property name="doc" location="doc"/>
+    <property name="sounds" location="sounds"/>
+
+    <target name="init">
+        <delete file="${projectName}.zip"/>
+    </target>
+
+    <target name="make" depends="init"
+            description="copy the sources">
+        <copydir src="${src}" dest="${build}" />
+        <copydir src="${images}" dest="${build}/images" />
+        <copydir src="${doc}" dest="${doc}/doc" />
+        <copydir src="${sounds}" dest="${sounds}/sounds" />
+    </target>
+
+    <target name="zip" depends="make"
+            description="put everything into a zip file">
+        <zip zipfile="${projectName}.zip" basedir="out/production"/>
+    </target>
+
+</project>
