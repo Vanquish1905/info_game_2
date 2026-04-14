@@ -2,7 +2,7 @@ import greenfoot.Actor;
 
 public class Star extends Actor {
 
-	private final long destroyAfter = System.currentTimeMillis() + 500;
+	private final long destroyAfter = System.currentTimeMillis() + 1_000;
 
 	public Star(){
 		getImage().scale(40, 40);

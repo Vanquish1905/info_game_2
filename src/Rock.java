@@ -1,24 +1,18 @@
 import greenfoot.*;
 
 
-public class Rock extends ImprovedActor
+public class Rock extends WorldBuildingObject implements Destructable
 {
     //attribute
     private int damage;
-    private int benotigteSchlaege;
+
     //KOnstructor
-    public Rock(int rockDamage) {
-        this.benotigteSchlaege = Greenfoot.getRandomNumber(4)+1;
+    public Rock(int rockDamage, int hardness) {
+        setLife(hardness);
         setDamage(rockDamage);
     }
     //setter und Getter
-    public int  getBenotigteSchlaege() {
-        return benotigteSchlaege;
-    }
 
-    public void setBenotigteSchlaege(int ZerstorSchlaege) {
-        this.benotigteSchlaege = ZerstorSchlaege;
-    }
     public int getDamage() {
         return damage;
     }
@@ -38,11 +32,11 @@ public class Rock extends ImprovedActor
             spawnGoldnugget();
         }
     }
-
-	public void hit(){
+    @Override
+	public void onDestruction(MovingActor trigger){
 		getWorld().addObject(new Star(), getX(), getY()); //Bei einem Treffer wird kurz ein Stern eingeblendet
-        setBenotigteSchlaege(getBenotigteSchlaege()-1);
-		if(getBenotigteSchlaege()<=0){
+        setLife(getLife()-trigger.getDestructableDamage());
+		if(getLife()<=0){
             spawnGoldnuggetChance(3);
             getWorld().removeObject(this);
 

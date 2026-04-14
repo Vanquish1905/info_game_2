@@ -1,35 +1,17 @@
-import greenfoot.Greenfoot;
-
 import java.util.*;
 
-public class Monster extends MovingActor{
+public class Monster extends MovingActor {
     //Atributes
-    private int lifes;
-    private int damage;
-
 
 
     //Konstructor
     public Monster() {
-        this.lifes = 50;
-        this.damage = 10;
+        setLife(50);
+        setDamage(10);
     }
 
-    //setter und getter
-    public int getLife() {
-        return lifes;
-    }
 
-    public void setLife(int life) {
-        this.lifes = life;
-    }
-    public int getDamage() {
-        return damage;
-    }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
 
 
     public void act() {
@@ -39,7 +21,7 @@ public class Monster extends MovingActor{
 
     public void hit(int damageTaken) {
         getWorld().addObject(new Star(), getX(), getY());
-        setLife(lifes - damageTaken);
+        setLife(getLife() - damageTaken);
         if (getLife() <= 0) {
             getWorld().removeObject(this);
         }

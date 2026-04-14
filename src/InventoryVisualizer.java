@@ -6,11 +6,15 @@ public class InventoryVisualizer extends Actor {
 
     private final InventorySlot[] slots;
     private final Actor[] inventory;
+    private final Character owner;
+    private HotbarSelector currentSelector = null;
+    private int lastSelectedSlot = -1;
 
-    public InventoryVisualizer(Actor[] inventory) {
+    public InventoryVisualizer(Actor[] inventory, Character owner) {
         getImage().setTransparency(0);
         slots = new InventorySlot[inventory.length];
         this.inventory = inventory;
+        this.owner = owner;
     }
 
   /*  public InventoryVisualizer(List<Actor> inventory) {
@@ -20,7 +24,7 @@ public class InventoryVisualizer extends Actor {
     public void act(){
         update();
     }
-    
+
     protected void addedToWorld(World world){
         for(int i=0; i < slots.length; i++){
             slots[i] = createItemSlot(i);
@@ -33,10 +37,10 @@ public class InventoryVisualizer extends Actor {
         return slot;
     }
 
-    
+
     /**
      * Updates all inventory Slots at the bottom of the screen with the content of the given inventory Array
-     */ 
+     */
     private void update() {
         int length = Math.min(inventory.length, this.slots.length);
         for (int i = 0; i < length; i++) {
@@ -44,6 +48,15 @@ public class InventoryVisualizer extends Actor {
                 slots[i].setItem(inventory[i]);
             }
         }
+        if (owner.getSelectedSlot() == lastSelectedSlot) {
+            return;
+        }
+        HotbarSelector hotbarSelector = new HotbarSelector();
+        getWorld().addObject(hotbarSelector, owner.getSelectedSlot(), getY());
+        if (currentSelector != null) {
+            getWorld().removeObject(currentSelector);
+        }
+        lastSelectedSlot = owner.getSelectedSlot();
+        currentSelector = hotbarSelector;
     }
-
 }

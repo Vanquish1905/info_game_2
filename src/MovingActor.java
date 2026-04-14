@@ -7,15 +7,94 @@ import java.io.IOException;
 import java.util.List;
 
 
-/**
- */
+
+
+
+
+
 public class MovingActor extends ImprovedActor {
     private final GreenfootImage[][] movingActorImages = new ImprovedGreenfootImage[4][4];
     private int animationStep = 0;
 
+    private int damage;
+    private int gold;
+    private int destructableDamage;
+    private int startingDamage;
+    private int FistDamage;
+    private int SwordDamage;
+    private Armour currentArmour;
+
+    public Armour getCurrentArmour() {
+        return currentArmour;
+    }
+    public void setCurrentArmour(Armour currentArmour) {
+        this.currentArmour = currentArmour;
+    }
+    public int getSwordDamage() {
+        return SwordDamage;
+    }
+    public void setSwordDamage(int swordDamage) {
+        SwordDamage = swordDamage;
+    }
+    public int getFistDamage() {
+        return FistDamage;
+    }
+    public void setFistDamage(int fistDanage) {
+        FistDamage = fistDanage;
+    }
+    public int getStartingDamage() {
+        return startingDamage;
+    }
+    public void setStartingDamage(int startingDamage) {
+        this.startingDamage = startingDamage;
+    }
+    public int getDestructableDamage() {
+        return destructableDamage;
+    }
+    public void setDestructableDamage(int destructableDamage) {
+        this.destructableDamage = destructableDamage;
+    }
+    public int getGold() {
+        return gold;
+    }
+    public void setGold(int Gold) {
+        this.gold = Gold;
+    }
+    public int getDamage() {
+        return damage;
+    }
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+
+
     /**
      * Creates a MovingActor
      */
+
+    public void hitMovingactor(MovingActor hitter){
+
+        List<MovingActor> monster = getWorld().getObjectsAt(getX(), getY(), MovingActor.class);
+        if(!monster.isEmpty()){
+            MovingActor target;
+            if (monster.get(0)==hitter){
+                if (monster.size()>1){
+                    target = monster.get(1);
+                }else{
+                    return;
+                }
+            }else {
+                target = monster.get(0);
+            }
+            target.setLife(target.getLife() - hitter.getDamage());
+            if (target.getLife()<=0){
+                getWorld().removeObject(target);
+            }
+        }
+
+
+    }
     public MovingActor() {
         String imgFolder = "." + File.separator + "images" + File.separator + this.getClass().getSimpleName() + File.separator;
         //File folder = new File(imgFolder);
@@ -46,6 +125,14 @@ public class MovingActor extends ImprovedActor {
 
         setImageRotation(Direction.SOUTH);
     }
+    private void hit(MovingActor trigger){
+
+        List<MovingActor> enemys = getWorld().getObjectsAt(getX(), getY(), MovingActor.class);
+        if (!enemys.isEmpty()) {
+            MovingActor hitenemy = enemys.get(0);
+            hitenemy.setLife(getLife()-trigger.getDamage());
+        }
+    }
 
 
     /**
@@ -68,11 +155,10 @@ public class MovingActor extends ImprovedActor {
         //System.out.println("direction=" + getRotation() + ", dx=" + dx + ", dy=" + dy + ", current.x=" + getX()  + ", current.y=" + getY()  + ", next.x=" + x  + ", next.y=" + getY());
 
         List<Rock> rocks = myWorld.getObjectsAt(x, y, Rock.class);
-        if(rocks.isEmpty()){
-            List<InventoryVisualizer> inv = myWorld.getObjectsAt(x, y, InventoryVisualizer.class);
-            if (inv.isEmpty()){
-                return true;
-            }
+        List<InventorySlot> inv = myWorld.getObjectsAt(x, y, InventorySlot.class);
+        List<IronFence> ironFences = myWorld.getObjectsAt(x,y,IronFence.class);
+        if(rocks.isEmpty() && inv.isEmpty() && ironFences.isEmpty()){
+            return true;
         }
         return false;
     }
