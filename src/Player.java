@@ -1,7 +1,5 @@
 import greenfoot.*;
 import java.util.*;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 
 public class Player extends Character{
 
@@ -107,6 +105,9 @@ public class Player extends Character{
         if (Greenfoot.isKeyDown("F1")) {
             debugValues();
         }
+        if (Greenfoot.isKeyDown("F2")) {
+            invincibleMode();
+        }
         if(Greenfoot.isKeyDown("U")){
             flipLever();
         }
@@ -192,7 +193,9 @@ public class Player extends Character{
         }
 
     }
-
+    private void invincibleMode(){
+        setLife(999999999);
+    }
     //eating Fruits
     private void eatAnyFruit(){
 
@@ -246,7 +249,7 @@ public class Player extends Character{
         if(checkForRock(getNextX(1), getNextY(1))){
             List<Destructible> destructibles = getWorld().getObjectsAt(getNextX(1), getNextY(1), Destructible.class);
             Destructible destructible = destructibles.get(0);
-            destructible.hit(this);
+            destructible.onDestruction(this);
         }
     }
 

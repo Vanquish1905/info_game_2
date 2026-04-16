@@ -1,9 +1,10 @@
 import greenfoot.*;
 
 
-public class Rock extends WorldBuildingObject implements Destructable
+public class Rock extends WorldBuildingObject implements Destructible
 {
     //attribute
+
     private int damage;
 
     //KOnstructor
