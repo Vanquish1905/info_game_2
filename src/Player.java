@@ -246,11 +246,13 @@ public class Player extends Character{
     }
 
     private void hitDestructable(){
-        if(checkForRock(getNextX(1), getNextY(1))){
-            List<Destructible> destructibles = getWorld().getObjectsAt(getNextX(1), getNextY(1), Destructible.class);
+
+        List<Destructible> destructibles = getWorld().getObjectsAt(getNextX(1), getNextY(1), Destructible.class);
+        if (!destructibles.isEmpty()) {
             Destructible destructible = destructibles.get(0);
             destructible.onDestruction(this);
         }
+
     }
 
     //Bewegung

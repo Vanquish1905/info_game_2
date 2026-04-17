@@ -147,20 +147,14 @@ public class MovingActor extends ImprovedActor {
      * @param distance the distance
      */
     public boolean canMove(int distance) {
-        World myWorld = getWorld();
 
         int x = getNextX(distance);
         int y = getNextY(distance);
 
         //System.out.println("direction=" + getRotation() + ", dx=" + dx + ", dy=" + dy + ", current.x=" + getX()  + ", current.y=" + getY()  + ", next.x=" + x  + ", next.y=" + getY());
 
-        List<Rock> rocks = myWorld.getObjectsAt(x, y, Rock.class);
-        List<InventorySlot> inv = myWorld.getObjectsAt(x, y, InventorySlot.class);
-        List<IronFence> ironFences = myWorld.getObjectsAt(x,y,IronFence.class);
-        if(rocks.isEmpty() && inv.isEmpty() && ironFences.isEmpty()){
-            return true;
-        }
-        return false;
+        List<NotWalkthroughObject> notWalkthroughObjects = getWorld().getObjectsAt(x,y,NotWalkthroughObject.class);
+        return notWalkthroughObjects.isEmpty();
     }
 
     public int getNextX(int distance){

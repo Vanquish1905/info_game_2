@@ -4,7 +4,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author SAE
  * @version 3.0
  */
-public class InventorySlot extends Actor
+public class InventorySlot extends Actor implements NotWalkthroughObject
 {
     private Actor item;
     

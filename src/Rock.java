@@ -1,11 +1,11 @@
 import greenfoot.*;
 
 
-public class Rock extends WorldBuildingObject implements Destructible
+public class Rock extends WorldBuildingObject implements Destructible, NotWalkthroughObject
 {
     //attribute
 
-    private int damage;
+
 
     //KOnstructor
     public Rock(int rockDamage, int hardness) {
@@ -14,13 +14,7 @@ public class Rock extends WorldBuildingObject implements Destructible
     }
     //setter und Getter
 
-    public int getDamage() {
-        return damage;
-    }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
 
 	//Methoden
     private void spawnGoldnugget(){

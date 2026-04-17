@@ -2,12 +2,18 @@ public class Sword extends Item implements Pickable, Usable {
 
     private int extradamage;
     private String swordType;
+    public int damageBefore;
 
 
     public String getSwordtype() {
         return swordType;
     }
-
+    public int getDamageBefore() {
+        return damageBefore;
+    }
+    public void setDamageBefore(int damageBefore) {
+        this.damageBefore = damageBefore;
+    }
     public void setSwordType(String swordType) {
         this.swordType = swordType;
     }
@@ -40,7 +46,11 @@ public class Sword extends Item implements Pickable, Usable {
 
     @Override
     public void onUse(MovingActor trigger){
+        setDamageBefore(trigger.getDamage());
         trigger.setDamage(trigger.getDamage()+getExtradamage());
+    }
+    public void onNouse(MovingActor trigger){
+        trigger.setDamage(getDamageBefore());
     }
 
 
