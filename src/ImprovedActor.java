@@ -4,6 +4,7 @@ import greenfoot.GreenfootImage;
 public class ImprovedActor extends Actor {
     private GreenfootImage currentImage; //stored to ensure paint can be removed
     private int life;
+    private int lastDrawnValue = -1;
 
     public int getLife() {
         return this.life;
@@ -39,7 +40,12 @@ public class ImprovedActor extends Actor {
      * Draws the int value over the current image.
      * @param value to be drawn
      */
-    public void draw(int value){
-        draw(String.valueOf(value));
+    public void draw(int value) {
+        if (value == lastDrawnValue) return; // Optimization: Don't redraw if same
+
+        lastDrawnValue = value;
+        ImprovedGreenfootImage image = new ImprovedGreenfootImage(currentImage);
+        image.drawString(String.valueOf(value), 0, 10);
+        super.setImage(image);
     }
 }

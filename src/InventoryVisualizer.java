@@ -1,7 +1,5 @@
 import greenfoot.*;
 
-import java.util.List;
-
 public class InventoryVisualizer extends Actor implements NotWalkthroughObject {
 
     private final InventorySlot[] slots;
