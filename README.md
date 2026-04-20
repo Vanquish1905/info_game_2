@@ -1,4 +1,4 @@
-1) Requirements (students and teacher):
+1) Requirements:
 - Install Greenfoot 3.7.0 (https://www.greenfoot.org/download)
   to C:\Program Files\Greenfoot
 
