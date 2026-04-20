@@ -1,4 +1,4 @@
-public class WorldBuildingObject extends ImprovedActor{
+public abstract class WorldBuildingObject extends ImprovedActor{
     private int damage;
     public int getDamage() {
         return damage;
