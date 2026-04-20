@@ -1,8 +1,8 @@
 public class Armour extends Item implements Pickable, Usable{
-
     private boolean Picked;
     private int Durability;
     private int Protection;
+    private ArmourType currentType;
 
     public int getProtection() {
         return Protection;
@@ -33,23 +33,31 @@ public class Armour extends Item implements Pickable, Usable{
         }
         trigger.setCurrentArmour(this);
     }
-    public Armour(String type){
-        switch (type){
-            case "Diamond":
+    public Armour(ArmourType type){
+        setArmourType(type);
+    }
+    public void setArmourType(ArmourType type) {
+        this.currentType = type;
+
+        switch (type) {
+            case Diamond:
                 //setImage();
                 //getImage().scale();
                 setDurability(500);
                 setProtection(30);
-            case "Iron":
+                break;
+            case Iron:
                 //setImage();
                 //getImage().scale();
                 setDurability(350);
                 setProtection(20);
-            case "Leather":
+                break;
+            case Leather:
                 //setImage();
                 //getImage().scale();
                 setDurability(180);
                 setProtection(10);
+                break;
         }
     }
 }
