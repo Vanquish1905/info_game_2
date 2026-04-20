@@ -1,3 +1,3 @@
-public class Item extends ImprovedActor {
+public abstract class Item extends ImprovedActor {
 
 }

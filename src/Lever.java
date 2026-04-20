@@ -1,33 +1,33 @@
 import java.util.List;
 
 public class Lever extends Item implements Usable{
-    public String getState() {
+    public Boolean getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(Boolean state) {
         this.state = state;
     }
 
-    private String state;
+    private boolean state;
 
 
-    public Lever(String state) {
-        if (state == "on" || state == "On"){
+    public Lever(boolean state) {
+        if (state == true ){
             setImage("Lever_on.png");
-            setState("on");
-        } else if (state=="off" || state=="Off") {
+            setState(true);
+        } else if ( state == false) {
             setImage("Lever_off.png");
-            setState("off");
+            setState(false);
         }
 
     }
     @Override
     public void onUse(MovingActor trigger){
-        if (getState()=="on"||getState()=="On"){
-            setState("off");
-        } else if (getState()=="off"||getState()=="Off"){
-            setState("on");
+        if (getState()== true){
+            setState(false);
+        } else if (getState()==false){
+            setState(true);
         }
     }
 
