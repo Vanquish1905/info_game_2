@@ -43,7 +43,7 @@ public class Level1 extends World
         for(int i = 0; i< getHeight()-1;i++){
             addObject(new IronFence(), 9 ,i);
         }
-        Lever lever = new Lever("off");
+        Lever lever = new Lever(false);
         addObject(lever,8,5);
 
     }
@@ -54,7 +54,7 @@ public class Level1 extends World
         List<Lever> leverList = getObjects(Lever.class);
         if (!leverList.isEmpty()) {
             Lever lever = leverList.get(0);
-            if (lever.getState() == "on" || lever.getState() == "On") {
+            if (lever.getState() == true) {
                 for (int i =0; i<getHeight()-1;i++){
                     lever.removeUndestructable(9, i);
                 }
