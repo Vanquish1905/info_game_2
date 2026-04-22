@@ -9,23 +9,11 @@ public class Monster extends MovingActor {
         setLife(50);
         setDamage(10);
     }
-
-
-
-
-
     public void act() {
         moveToPlayer();
     }
     //Methoden
 
-    public void hit(int damageTaken) {
-        getWorld().addObject(new Star(), getX(), getY());
-        setLife(getLife() - damageTaken);
-        if (getLife() <= 0) {
-            getWorld().removeObject(this);
-        }
-    }
     private void moveToXY(int x, int y){
         int distanceX = x - getX();
         int distanceY = y - getY();
