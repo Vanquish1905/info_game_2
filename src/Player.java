@@ -6,11 +6,15 @@ public class Player extends Character{
     //Attribute
     private final Item[] inventory = new Item[10];
     private InventoryVisualizer inventoryVisualizer;
-    private final int TOTAL_SLOTS = 10;
-    private boolean isListening = false;
+    private boolean adminMode = false;
 
 
-
+    public boolean isAdminMode() {
+        return adminMode;
+    }
+    public void setAdminMode(boolean adminMode) {
+        this.adminMode = adminMode;
+    }
 
     //Konstruktoren
     //this. immer zum bestimmen der Value vom Object(Object muss voher definieret worden sein in Attributen)
@@ -33,9 +37,8 @@ public class Player extends Character{
         selectSlot();
         checkControlls();
         calculateDamage();
+        checkLife();
     }
-
-
 
 
     //Methoden
@@ -58,9 +61,6 @@ public class Player extends Character{
         setSelectedSlot(1);
     }
 
-
-
-
     public void checkControlls(){
         if (Greenfoot.isKeyDown("E")){
            hitAnything();
@@ -72,7 +72,7 @@ public class Player extends Character{
             putAnything();
         }
         if (Greenfoot.isKeyDown("Q")) {
-            eatAnyFruit();
+            useAnything();
             equipArmour();
         }
         if (Greenfoot.isKeyDown("B")) {
@@ -108,9 +108,6 @@ public class Player extends Character{
         if (Greenfoot.isKeyDown("F2")) {
             invincibleMode();
         }
-        if(Greenfoot.isKeyDown("U")){
-            flipLever();
-        }
     }
 
 
@@ -124,11 +121,9 @@ public class Player extends Character{
         }
     }
 
-
     public void hitAnything(){
             hitDestructable();
             hitMovingactor(this);
-
     }
 
     public void pickUPAnything(){
@@ -145,28 +140,7 @@ public class Player extends Character{
             }
         }
     }
-
-    //move in inv
-   /* private void ensureMouseListener()
-    {
-        if (!isListening && getWorld() != null)
-        {
-            Greenfoot.getWorld().addMouseWheelListener(new MouseWheelListener() {
-                @Override
-                public void mouseWheelMoved(MouseWheelEvent e) {
-                    // This runs every time the wheel moves
-                    handleScroll(e.getWheelRotation());
-                }
-            });
-            isListening = true;
-        }
-    }
-    private void handleScroll(int rotation)
-    {
-        setSelectedSlot((getSelectedSlot() + rotation + TOTAL_SLOTS) % TOTAL_SLOTS);
-
-    }
-    */
+    
     private void selectSlot() {
         String lastKey = Greenfoot.getKey();
         for(int i = 0; i < inventory.length+1; i++) {
@@ -195,29 +169,36 @@ public class Player extends Character{
     }
     private void invincibleMode(){
         setLife(999999999);
+        if (!isAdminMode()){
+            setAdminMode(true);
+        }
     }
-    //eating Fruits
-    private void eatAnyFruit(){
 
-        List <Edible> edibles = getWorld().getObjectsAt(getX(), getY(), Edible.class);
-        if (!edibles.isEmpty()) {
-            Edible objectToEat = edibles.get(0);
+
+    private void useAnything(){
+        List <Usable> usables = getWorld().getObjectsAt(getX(), getY(), Usable.class);
+        if (!usables.isEmpty()) {
+            Usable objectToUse = usables.get(0);
             if (getLife() < 100) {
-                objectToEat.onUse(this);
+                objectToUse.onUse(this);
             }
         } else {
             int selectedSolt = getSelectedSlot();
-            Item objectToEat = inventory[selectedSolt];
-            if (objectToEat instanceof Edible){
-                ((Edible) objectToEat).onUse(this);
+            Item objectToUse = inventory[selectedSolt];
+            if (objectToUse instanceof Edible){
+                ((Edible) objectToUse).onUse(this);
                 inventory[selectedSolt] = null;
             }
         }
-
+    }
+    private void checkLife(){
         if (getLife() > 100){
-            setLife(100);
+            say("you cheated");
+            Greenfoot.stop();
+        } else if (getLife()<=0) {
+            say("you lost");
+            Greenfoot.stop();
         }
-
     }
 
     private void equipArmour(){
@@ -236,13 +217,6 @@ public class Player extends Character{
                 inventory[selectedSolt] = null;
             }
         }
-    }
-
-
-    //check for Rock
-    private boolean checkForRock(int x, int y){
-        List<Rock> rocks = getWorld().getObjectsAt(x,y,Rock.class);
-        return !rocks.isEmpty();
     }
 
     private void hitDestructable(){
@@ -353,7 +327,6 @@ public class Player extends Character{
         }else System.out.println( "error: object isn't facing any direction directly");
         return "Error";
     }
-    //gold
 
 
     //enter next level
@@ -379,14 +352,6 @@ public class Player extends Character{
 
 
     }
-    public void flipLever(){
-        if (isTouching(Lever.class)){
-            List<Lever> levers = getWorld().getObjectsAt(getX(),getY(),Lever.class);
-            Lever lever = levers.get(0);
-            lever.onUse(this);
-        }
-    }
-
 }
 
 
