@@ -192,7 +192,7 @@ public class Player extends Character{
         }
     }
     private void checkLife(){
-        if (getLife() > 100){
+        if (getLife() > 100 && !isAdminMode()){
             say("you cheated");
             Greenfoot.stop();
         } else if (getLife()<=0) {
@@ -211,9 +211,9 @@ public class Player extends Character{
             }
         } else {
             int selectedSolt = getSelectedSlot();
-            Item objectToEat = inventory[selectedSolt];
-            if (objectToEat instanceof Armour){
-                ((Armour) objectToEat).onUse(this);
+            Item objectToUse = inventory[selectedSolt];
+            if (objectToUse instanceof Armour){
+                ((Armour) objectToUse).onUse(this);
                 inventory[selectedSolt] = null;
             }
         }
