@@ -17,7 +17,7 @@ public class Level1 extends World
     {
         super(10, 10,60);
         setBackground("cell.jpg");
-        setPaintOrder(HotbarSelector.class,InventorySlot.class, Star.class, Player.class,IronFence.class, Lever.class, GoldNugget.class, Edible.class, Rock.class);
+        setPaintOrder(HotbarSelector.class,InventorySlot.class,ClickableActor.class, Star.class, Player.class,IronFence.class, Lever.class, GoldNugget.class, Edible.class, Rock.class);
         Monster monster =  new Monster();
         addObject(monster, 8, 3);
         Merchant merchant = new Merchant();
@@ -36,7 +36,8 @@ public class Level1 extends World
         addObject(apple,2,  6);
         Edible banana = new Edible("Banana", 20);
         addObject(banana,2,  7);
-
+        ClickableActor clickactor = new ClickableActor();
+        addObject(clickactor, 3, 3);
         for(int i = 0; i<8;i++){
             addObject(new Rock(10, 15),7,  i);
         }
